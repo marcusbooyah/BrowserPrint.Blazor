@@ -52,6 +52,8 @@ Welcome to your new app.
         {
             devices = await bp.GetAvailablePrintersAsync();
 
+            var defaultPrinter = await bp.GetDefaultPrinterAsync();
+
             await InvokeAsync(StateHasChanged);
         }
     }

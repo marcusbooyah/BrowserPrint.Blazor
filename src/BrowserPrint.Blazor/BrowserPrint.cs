@@ -81,9 +81,11 @@ namespace BrowserPrint
             devices = await GetAvailablePrintersAsync();
 
             var lines = device.Split('\n');
-            var id = lines.Where(l => l.Contains("ID:")).First().Split(":", StringSplitOptions.RemoveEmptyEntries).Last();
+            var id = lines.Where(l => l.Contains("ID:")).First().Split(":", StringSplitOptions.RemoveEmptyEntries).Last().Trim();
 
-            return devices.Where(d => d.Uid == id).FirstOrDefault();
+            var defaultDevice = devices.Where(d => d.Uid == id).FirstOrDefault();
+
+            return defaultDevice;
         }
 
         public async Task PrintAsync(Device device, string data)

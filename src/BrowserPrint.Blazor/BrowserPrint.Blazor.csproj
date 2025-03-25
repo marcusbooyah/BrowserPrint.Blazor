@@ -3,6 +3,9 @@
 	<PropertyGroup>
 		<TargetFramework>net9.0</TargetFramework>
 		<RootNamespace>BrowserPrint</RootNamespace>
+        <Description>Zebra Browser Print support for .NET Blazor</Description>
+        <PackageTags>Zebra BrowserPrint Browser Print Blazor</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>
