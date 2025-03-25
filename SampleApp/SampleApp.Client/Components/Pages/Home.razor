@@ -1,0 +1,77 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@using BrowserPrint
+@using BrowserPrint.Models
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<InputSelect @bind-Value="device" @bind-Value:after="OnPrinterchangedAsync">
+    <option value="">
+        Select device ...
+    </option>
+    @foreach (var d in devices)
+    {
+        <option checked="@(d.Uid == device)"
+        value="@d.Uid">
+            @d.Uid
+        </option>
+    }
+</InputSelect>
+
+<button @onclick="PrintAsync">Print</button>
+
+<div>
+  <span>Printer Status</span>
+  <span>@status?.IsReady</span>
+</div>
+
+@code
+{
+    [Inject]
+    public BrowserPrintService bp { get; set; }
+
+
+    private IEnumerable<Device> devices = new List<Device>();
+    private string device;
+    private Device? printer;
+    private PrinterStatus status;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+
+
+        if (RendererInfo.IsInteractive)
+        {
+            devices = await bp.GetAvailablePrintersAsync();
+
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private async Task OnPrinterchangedAsync()
+    {
+        printer = devices.Where(d => d.Uid == device).FirstOrDefault();
+        status = await bp.CheckPrinterStatusAsync(printer);
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task PrintAsync()
+    {
+
+        if (printer == null)
+        {
+            return;
+        }
+
+        await bp.PrintAsync(printer, "^XA\n^BY2,2,100\n^FO20,20^BC^FD$123^FS\n^XZ");
+    }
+}

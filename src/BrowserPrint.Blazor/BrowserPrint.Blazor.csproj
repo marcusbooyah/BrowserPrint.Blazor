@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<RootNamespace>BrowserPrint</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components" Version="9.0.2" />
+		<PackageReference Include="Microsoft.JSInterop" Version="9.0.3" />
+		<PackageReference Include="Neon.Blazor" Version="4.0.14" />
+		<PackageReference Include="Neon.Common" Version="4.0.14" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="wwwroot\js\interop.js" />
+	</ItemGroup>
+</Project>
